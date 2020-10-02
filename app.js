@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const saucesRoutes = require('./routes/sauces.js');
+
 mongoose.connect('mongodb+srv://Marie_Sylvestre:CapucinE1*@cluster0.q2lux.mongodb.net/<Marie_Sylvestre>?retryWrites=true&w=majority',
     { useNewUrlParser: true,
         useUnifiedTopology: true })
@@ -9,7 +11,8 @@ mongoose.connect('mongodb+srv://Marie_Sylvestre:CapucinE1*@cluster0.q2lux.mongod
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();
-const Sauces = require('./models/sauces');
+
+//const Utilisateur = require('./models/utilisateur');
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -17,40 +20,30 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
+
 app.use(bodyParser.json());
 
-app.post('/api/sauces', (req, res, next) => {
+app.use('/api/sauces', saucesRoutes);
+
+/*app.post('/api/auth/signup', (req, res, next) => {
     delete req.body._id;
-    const sauces = new Sauces({
+    const utilisateur = new Utilisateur({
         ...req.body
     });
-    sauces.save()
-        .then(() => res.status(201).json({ message: 'Objet enregistré !'}))
+    utilisateur.save()
+        .then(() => res.status(201).json({ message: 'Utilisateur enregistré !'}))
         .catch(error => res.status(400).json({ error }));
 });
 
-app.get('/api/sauces', (req, res, next) => {
-    Sauces.findOne({ _id: req.params.id })
-        .then(sauces => res.status(200).json(sauces))
-        .catch(error => res.status(404).json({ error }));
-});
-
-app.get('/api/sauces/:id', (req, res, next) => {
-    Sauces.findOne({ _id: req.params.id })
-        .then(sauces => res.status(200).json(sauces))
-        .catch(error => res.status(404).json({ error }));
-});
-
-app.put('/api/sauces/:id', (req, res, next) => {
-    Sauces.updateOne({ _id: req.params.id }, { ...req.body, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Objet modifié !'}))
+app.post('/api/auth/login', (req, res, next) => {
+    delete req.body._id;
+    const utilisateur = new Utilisateur({
+        ...req.body
+    });
+    utilisateur.save()
+        .then(() => res.status(201).json({ message: 'Utilisateur enregistré !'}))
         .catch(error => res.status(400).json({ error }));
 });
-
-app.delete('/api/sauces/:id', (req, res, next) => {
-    Sauces.deleteOne({ _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
-        .catch(error => res.status(400).json({ error }));
-});
+*/
 
 module.exports = app;
