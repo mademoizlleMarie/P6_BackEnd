@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const saucesRoutes = require('./routes/sauces.js');
+const userRoutes = require('./routes/user.js')
+
 
 mongoose.connect('mongodb+srv://Marie_Sylvestre:CapucinE1*@cluster0.q2lux.mongodb.net/<Marie_Sylvestre>?retryWrites=true&w=majority',
     { useNewUrlParser: true,
@@ -11,8 +13,6 @@ mongoose.connect('mongodb+srv://Marie_Sylvestre:CapucinE1*@cluster0.q2lux.mongod
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();
-
-//const Utilisateur = require('./models/utilisateur');
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -24,6 +24,8 @@ app.use((req, res, next) => {
 app.use(bodyParser.json());
 
 app.use('/api/sauces', saucesRoutes);
+app.use('/api/auth', userRoutes);
+
 
 /*app.post('/api/auth/signup', (req, res, next) => {
     delete req.body._id;
