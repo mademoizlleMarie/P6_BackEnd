@@ -28,26 +28,4 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', saucesRoutes);
 app.use('/api/auth', userRoutes);
 
-
-/*app.post('/api/auth/signup', (req, res, next) => {
-    delete req.body._id;
-    const utilisateur = new Utilisateur({
-        ...req.body
-    });
-    utilisateur.save()
-        .then(() => res.status(201).json({ message: 'Utilisateur enregistré !'}))
-        .catch(error => res.status(400).json({ error }));
-});
-
-app.post('/api/auth/login', (req, res, next) => {
-    delete req.body._id;
-    const utilisateur = new Utilisateur({
-        ...req.body
-    });
-    utilisateur.save()
-        .then(() => res.status(201).json({ message: 'Utilisateur enregistré !'}))
-        .catch(error => res.status(400).json({ error }));
-});
-*/
-
 module.exports = app;
